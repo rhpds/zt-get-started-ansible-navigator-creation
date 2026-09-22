@@ -16,6 +16,4 @@ virtualmachines:
       user: rhel
       password: ansible123!
       chpasswd: { expire: False }
-      runcmd:
-        - sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/" /etc/ssh/sshd_config
-        - systemctl reload sshd
+      ssh_pwauth: true
