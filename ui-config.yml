@@ -4,18 +4,25 @@ antora:
   name: modules
   dir: www
   modules:
-    - name: module-01
-      label: "Writing your lab"
+    - name: 01-ansible-navigator-intro
+      label: "Introduce the Environment"
       solveButton: true
-    - name: module-02
-      label: "Antora"
+    - name: 02-ansible-navigator-explore-ui
+      label: "Exploring the Interface"
       solveButton: true
-    - name: module-03
-      label: "Tabs"
+    - name: 03-configure-ansible-navigator
+      label: "Configuring Options"
+      solveButton: true
+    - name: 04-ansible-navigator-using-execution-environments
+      label: "Using Execution Environments"
+      solveButton: true
+    - name: 05-navigator-quiz
+      label: "Knowledge Check"
+      solveButton: true
 
 tabs:
   - name: ">_ terminal"
     url: /wetty
-  - name: "Asciidoc Doc"
-    url: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+  - name: "VSCode Editor"
+    url: https://code-server-{{guid}}.{{cluster_subdomain}}
     external: true
