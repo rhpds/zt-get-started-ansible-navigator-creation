@@ -23,6 +23,3 @@ antora:
 tabs:
   - name: ">_ terminal"
     url: /wetty
-  - name: "VSCode Editor"
-    url: https://code-server-{{guid}}.{{cluster_subdomain}}
-    external: true
