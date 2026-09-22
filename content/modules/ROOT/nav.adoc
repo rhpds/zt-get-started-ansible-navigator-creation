@@ -1,0 +1,5 @@
+* xref:01-ansible-navigator-intro.adoc[Module 1: Introduce the Environment]
+* xref:02-ansible-navigator-explore-ui.adoc[Module 2: Exploring the ansible-navigator Interface]
+* xref:03-configure-ansible-navigator.adoc[Module 3: Configuring Common ansible-navigator Options]
+* xref:04-ansible-navigator-using-execution-environments.adoc[Module 4: Using Execution Environments]
+* xref:05-navigator-quiz.adoc[Module 5: Knowledge Check]

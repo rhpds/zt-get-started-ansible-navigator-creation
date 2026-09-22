@@ -1,0 +1,36 @@
+:sectnums:
+:experimental:
+
+= Configuring common ansible-navigator options
+
+*ansible-navigator* has its own settings and can be configured on a per-project basis. This is useful if your projects span multiple execution environments, or require different ansible defaults, for example.
+
+Additionally, developers can use these settings to adapt *ansible-navigator* to their development styles, code editor/IDE, etc..
+
+Let's take a look at some of the common options.
+
+. In the directory */home/rhel/ansible-files/* you should see a file called *ansible-navigator.yml*. Open it up and check out the contents. Notice that there are currently some execution environment and logging settings already there.
+
++
+Developers love the ability to not only run ansible-navigator within the integrated terminal, but I want to be able to pass task output back to my code editor for inspection.
+
+. *ansible-navigator* can configure a preferred editor for the *:open* sub-command. Let's do that now. Open *ansible-navigator.yml* and set your preferred editor to the code-server instance in your environment. Do this by copying the following settings to the end of the file:
++
+[source,yaml]
+----
+  editor:
+    command: code-server {filename}
+    console: false
+----
+
+. Execute your test playbook:
++
+[source,yaml]
+----
+ansible-navigator run ./test.yml
+----
+
+. Inspect the play by pressing kbd:[0], inspect the first task by pressing kbd:[0] again and issue the subcommand *:open*.
++
+You should now have a new tab within your code editor with the output of that task as the file contents. *:open* works for any page within the navigator TUI and can be useful in creating playbooks.
+

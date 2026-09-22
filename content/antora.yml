@@ -1,4 +1,9 @@
 ---
-
 name: modules
 version: master
+
+asciidoc:
+  attributes:
+    lab_name: "Getting Started with Ansible Navigator"
+    release-version: master
+    page-pagination: true

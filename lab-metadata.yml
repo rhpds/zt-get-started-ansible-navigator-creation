@@ -1,0 +1,23 @@
+# lab-metadata.yml
+# Single Point of Truth for Lab Information
+
+lab:
+  name: "Getting Started with Ansible Navigator"
+  shortname: "zt-get-started-ansible-navigator"
+  maintainer: "Brandon Thomas (brthomas@redhat.com)"
+
+  description:
+    summary: "Learn the fundamentals of Ansible Navigator, the modern TUI for running and developing Ansible playbooks"
+    goal: "Understand ansible-navigator features, configuration, and how to use execution environments for reliable playbook development"
+    concepts:
+      - "Ansible Navigator"
+      - "Terminal User Interface (TUI)"
+      - "Execution Environments"
+      - "Ansible Configuration"
+      - "Playbook Development"
+    use_case: "Develop and run Ansible playbooks with a modern, container-based workflow"
+    time_to_complete: "45"
+
+  git_ref:
+    production: "v1.0.0"
+    development: "main"

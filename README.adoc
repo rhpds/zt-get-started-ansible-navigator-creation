@@ -1,104 +1,230 @@
-=== Getting Started
+= Getting Started with Ansible Navigator Lab
 
-* Create a git repo from this template
-* Clone the repo and *cd* into it
+A comprehensive learning lab for mastering Ansible Navigator, the modern Terminal User Interface for Ansible playbook development and execution.
 
-=== Understanding the Basic Template Directory Structure
+== Lab Overview
 
-. Content Directory
-+
-.tree output
-[source,shell]
+This repository contains a complete lab environment that teaches:
+
+* Introduction to Ansible Navigator and its core features
+* Navigation and interaction with the Ansible Navigator TUI
+* Configuration and customization of ansible-navigator
+* Using execution environments with ansible-navigator
+* Best practices for playbook development with containers
+
+**Time to Complete:** ~45 minutes
+
+== Repository Structure
+
+=== Content (Learning Materials)
+
+The actual lab content lives in the `content/` directory, organized by Antora (a static site generator):
+
+[source]
 ----
-.
-├── README.adoc                 # Readme file
-├── config                      # Defines VMs, network and firewall
-├── runtime-automation          # Scripts directory for setup/next/solve modules 
-├── setup-automation            # Scripts directory when provisioning
-├── ui-config.yml               # Configuration file
-├── site.yml                    # Theme config
-└── content                     # Content directory
-    ├── antora.yml              # Antora configuration file. You can add "inline vars" here to render within your content
-    └── modules/ROOT
-        ├── assets
-        │   └── images                       # Images used in your content 
-        │       └── example-image.png
-        ├── pages                            # Your content goes here
-        │   ├── module-01.adoc               # First module of your lab, e.g. overview etc 
-        │   ├── module-02.adoc               # Second module of your lab  
-        │   └── module-03.adoc               # Third module
+content/
+├── antora.yml                          # Antora configuration
+└── modules/ROOT/
+    ├── nav.adoc                        # Navigation structure (sidebar)
+    ├── pages/
+    │   ├── index.adoc                  # Lab home page
+    │   ├── 01-ansible-navigator-intro.adoc
+    │   ├── 02-ansible-navigator-explore-ui.adoc
+    │   ├── 03-configure-ansible-navigator.adoc
+    │   ├── 04-ansible-navigator-using-execution-environments.adoc
+    │   └── 05-navigator-quiz.adoc
+    └── assets/images/                 # Screenshots and diagrams
 ----
 
-. Lab definition directory
-+
-.tree output
-[source,shell]
+=== Infrastructure Configuration
+
+The `config/` directory defines the OpenShift CNV infrastructure needed:
+
+[source]
 ----
 config/
-├── firewall.yaml                           # Define the egress/ingress rules to be allowed
-├── instances.yaml                          # Define the instances to be created
-└── networks.yml                            # Define the networks to be created
+├── instances.yaml                      # VMs to be created (1 control node)
+├── firewall.yaml                       # Egress/ingress network rules
+├── networks.yaml                       # Virtual networks
+└── secrets.yaml                        # SSH keys, tokens, credentials
 ----
 
+**Key Instance:** A single RHEL control node with:
+- 4GB memory
+- 2 vCPUs
+- 50GB storage
+- Hostname: `control`
+- Ansible user: `rhel`
 
-. Runtime Scripts Directory Structure
-+
-.tree output
-[source,shell]
+=== Runtime Automation (Lab Playbooks)
+
+The `runtime-automation/` directory contains Ansible playbooks that power the lab:
+
+[source]
 ----
 runtime-automation/
-├── module_1                            # The directory name should be the same as 
-│                                       # the module content page name
-│   ├── setup.sh                        # Setup playbook which run at start of module 
-│                                       # and when clicked on next button
-│   ├── solve.sh                        # Solve playbook, run when clicked on solve button
-│   └── validation.sh                   # Validation playbook, run when click on next button
-├── ansible.cfg                         # Ansible configuration used with module playbooks
-└── main.yml                            # Playbook to be called in each step
+├── ansible.cfg                         # Ansible configuration
+├── inventory                           # Hosts file (targets "control")
+├── main.yml                            # Main orchestration playbook
+└── [01-05]-*/                          # Module directories
+    ├── setup.yml                       # Setup/reset for each module
+    ├── solve.yml                       # Solution/hint playbook
+    └── validation.yml                  # Validation/grading playbook
 ----
 
-. Setup Scripts Directory Structure
-+
-.tree output
-[source,shell]
+**How it works:** When a user interacts with the showroom UI (setup, solve, validation buttons), these playbooks run via Ansible runner to configure the lab environment.
+
+=== Setup Automation
+
+The `setup-automation/` directory handles initial provisioning when the lab is deployed:
+
+[source]
 ----
 setup-automation/
-├── setup-vmname.sh                     # Script to be executed on vmname when is provisioned
-├── ansible.cfg                         # Ansible configuration used with module playbooks
-└── main.yml                            # Playbook to be called in each step
+├── main.yml                            # Orchestration for initial setup
+└── setup-host1.sh                      # Host-specific setup script
 ----
 
+This runs once when the lab environment is created to prepare the control node.
 
-== Understanding UI Configration file
-. Example: The *ui-config.yml* configuration file
-+
-.tree output
-[source,shell]
+=== Site Configuration
+
+[source]
 ----
-antora:
-  name: modules
-  dir: www
-  modules:
-    - name: 01-playbook-inventory               # Module Name
-      label: Playbook Inventory                 # Module Label
-      solveButton: true                         # Enable Solve button
-    - name: 02-playbook-directory-structure
-      label: Playbook Directory Structure
-      solveButton: true
-tabs:
-  - name: VSCode Editor                         # Tab name
-    port: 8443                                  # Port no of the service
-    path: /?folder=/home/rhel/ansible-files/    # Path suffix
-  - name: ">_control"                           # Tab name
-    port: 443                                   # Port of the tt1 terminal
-    path: /tty1                                 # Path to the tty1 terminal
+site.yml                                # Antora site generator config (UI bundle, output dir)
+ui-config.yml                           # Showroom UI customization
+lab-metadata.yml                        # Lab metadata (name, time, concepts)
 ----
 
-=== Development Cycle
+== Building the Lab Content
 
-. Edit your content in `content/modules/ROOT/pages/`
-. Use `git` to branch and commit your work
-. Push your work to your repo
-.. You should use `git tags` or `git branches` in production
-.. However development items default to the head of `main`
+=== Prerequisites
 
+* Node.js (v14+)
+* npm
+* Antora CLI (will be installed via npm)
+
+=== Installation
+
+[source,bash]
+----
+npm install -g @antora/cli @antora/site-generator
+----
+
+=== Build the Site
+
+[source,bash]
+----
+antora site.yml
+----
+
+The output will be generated in `./www/www/`
+
+=== Preview Locally
+
+[source,bash]
+----
+cd www/www
+python3 -m http.server 8000
+----
+
+Then visit `http://localhost:8000` in your browser.
+
+== Lab Structure Explained
+
+=== What is Antora?
+
+**Antora** is a static site generator for documentation. It takes AsciiDoc content files and converts them to HTML with a professional UI theme.
+
+**Key concepts:**
+- `nav.adoc` defines the navigation structure (sidebar menu)
+- `antora.yml` configures the component (name, version, attributes)
+- `site.yml` configures the entire site (title, UI bundle, output location)
+
+=== Module Organization
+
+Each module (01-05) corresponds to:
+
+1. **Content page** in `content/modules/ROOT/pages/` (e.g., `01-ansible-navigator-intro.adoc`)
+   - The learning material users read
+
+2. **Runtime automation** in `runtime-automation/01-ansible-navigator-intro/`
+   - `setup.yml` — Prepares the lab for this module
+   - `solve.yml` — Provides hints or full solution
+   - `validation.yml` — Checks if the user completed the module correctly
+
+When a user clicks "Solve" in the showroom UI, the corresponding `solve.yml` playbook runs.
+
+=== What Happens During Deployment
+
+1. **OpenShift CNV provisions** the `control` VM based on `config/instances.yaml`
+2. **Setup automation** runs playbooks from `setup-automation/` to prepare the environment
+3. **Users access** the lab through a showroom UI with embedded editor and terminal
+4. **Runtime playbooks** execute when users click setup/solve/validation buttons
+5. **Content** is served as HTML from the Antora build output
+
+== Key Files to Understand
+
+=== runtime-automation/ansible.cfg
+[source,ini]
+----
+[defaults]
+inventory            = inventory
+retry_files_enabled  = false
+private_key_file     = /app/.ssh/labkey.pem
+----
+
+This tells Ansible where to find the inventory and which SSH key to use.
+
+=== runtime-automation/inventory
+[source,ini]
+----
+[controller]
+control
+
+[all:vars]
+ansible_user = rhel
+----
+
+This defines that we're targeting a host named `control` as the `rhel` user.
+
+=== config/instances.yaml
+[source,yaml]
+----
+virtualmachines:
+  - name: "control"
+    image: "rhel-9.5"
+    memory: "4G"
+    cores: 2
+    image_size: "50G"
+----
+
+This is what OpenShift CNV reads to create the VM.
+
+== Typical Learning Flow
+
+1. User opens the showroom in their browser
+2. UI shows the current module content (rendered from AsciiDoc)
+3. User can:
+   - Click **"Setup"** → runs `setup.yml` to prepare the module
+   - Click **"Solve"** → runs `solve.yml` to show solution
+   - Click **"Validate"** → runs `validation.yml` to check completion
+4. User works in the embedded terminal/editor
+5. Moves to next module
+
+Each module's `setup.yml` resets the environment, allowing users to retry or skip ahead.
+
+== Next Steps
+
+- Edit content in `content/modules/ROOT/pages/`
+- Add images to `content/modules/ROOT/assets/images/`
+- Modify playbooks in `runtime-automation/` for different module behaviors
+- Update infrastructure in `config/` if you need different VM specs
+- Test with `antora site.yml && cd www/www && python3 -m http.server 8000`
+
+== Questions?
+
+Refer to:
+- https://antora.org/[Antora documentation]
+- https://asciidoctor.org/[AsciiDoc syntax]
+- Ansible Playbooks guide for runtime automation

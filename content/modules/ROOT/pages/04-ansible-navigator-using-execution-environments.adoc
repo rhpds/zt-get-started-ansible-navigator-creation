@@ -1,0 +1,46 @@
+:sectnums:
+:experimental:
+= Using execution environments
+
+Up to this point, *ansible-navigator* has been running with just the built in modules and executing without an execution environment.
+
+Let's see what happens when we change *ansible-navigator.yml* to use the default execution environment.
+
+. Open *ansible-navigator.yml* and change *enabled: false* to *enabled: true* under the *execution-environment* settings block. The file should look like this:
++
+[source,yaml]
+----
+---
+ansible-navigator:
+  execution-environment:
+    container-engine: podman
+    enabled: true
+    image: quay.io/acme_corp/first_playbook_ee:latest
+    pull:
+      policy: never
+
+  logging:
+    level: debug
+
+  playbook-artifact:
+    save-as: /home/rhel/ansible-files/{playbook_name}-artifact-{time_stamp}.json
+
+  editor:
+    command: code-server {filename}
+    console: false
+
+----
+
+. Re-reun your test playbook:
+
++
+[source,shell]
+----
+ansible-navigator run ./test.yml
+----
++
+NOTE: *ansible-navigator* knows that it should be using an execution environment but none are currently present. You should see a pull process happening now where an execution environment is being pulled from container registry. *ansible-navigator* can be configured in the same yaml file to pull from your own Private Automation Hub.
+
+. Your *test.yml* file should have executed successfully. You can now use *ansible-navigator* to inspect this execution environment by issuing the *:collections* subcommand.
+
+. While inspecting collections, there is a module in the *ansible.utils* collection called *fact_diff*. Locate the author of this module and remember the github handle associated with this person.

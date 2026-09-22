@@ -1,14 +1,15 @@
 ---
 containers: []
 virtualmachines:
-  - name: "host1"
+  - name: "control"
     image: "rhel-9.5"
-    memory: "2G"
-    cores: 1
-    image_size: "40G"
+    memory: "4G"
+    cores: 2
+    image_size: "50G"
     tags:
       - key: "AnsibleGroup"
-        value: "bastions"
+        value: "control"
+      - key: "node_type"
+        value: "control_node"
     networks:
       - default
-      - secondary

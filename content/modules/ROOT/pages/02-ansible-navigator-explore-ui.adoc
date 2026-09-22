@@ -1,0 +1,89 @@
+:sectnums:
+:experimental:
+= Exploring the ansible-navigator interface
+
+
+In this challenge, we'll explore the https://github.com/ansible/ansible-navigator[ansible-navigator, window=_blank] interface and highlight new features.
+
+. First, run *ansible-navigator* with no additional options:
++
+[source,shell]
+----
+ansible-navigator
+----
+
++
+NOTE: Now that you are in the *ansible-navigator* TUI, there are many sub-commands available to help in developing, testing and inspecting your local environment. By default, the *:welcome* subcommand has already been issued which shows a quick overview of available subcommands. Run *:help* to see more info.
+
+. Try out the subcommand for displaying documentation of the ping module by issuing the following command in *ansible-navigator*:
++
+[source,vim]
+----
+:doc ping
+----
+
+. You can exit the ansible-navigtor TUI by issuing the following command.
++
+[source,vim]
+----
+:quit
+----
+
+. Run your simple playbook again to ping localhost, but this time leave off the *-m stdout* option:
++
+[source,shell]
+----
+ansible-navigator run ./test.yml
+----
+
+
+. You can also run playbooks from within the ansible-navigator TUI by simply issuing the run command with path to playbook:
++
+[source,shell]
+----
+:run ./test.yml
+----
+
++
+NOTE: In general, navigating *ansible-navigator* is done by using the number keys to select an option and the kbd:[Esc] key to go to the previous screen.
+
+. Open the play that was run by pressing the number corresponding to that line.
++
+Since this is the only playbook executed, it should be the kbd:[0] key.
++
+The next screen contains a list of tasks that ran as a part of the playbook. Press the corresponding number of each task to view details.
++
+In this example, use the kbd:[0] key to view the "Gather Facts" task.
++
+NOTE: To select a line with a number greater than 9, prepend the number with a colon.
++
+.Example: To select line 15, you would issue the command
+[source,shell]
+----
+:15
+----
+
+* After selecting the gather_facts task by pressing kbd:[0], issue the subcommand:
++
+[source,shell]
+----
+:doc
+----
++
+NOTE: Using *ansible-navigator* is very helpful for quickly referencing documentation for specific tasks while debugging playbooks.
+
+. Finally, you can pass subcommands directly to *ansible-navigator* on the command line. Try getting docs on with *setup* module:
++
+First exit the ansible-navigator TUI with kbd:[Esc] until you are back to the command line.
++
+[source,shell]
+----
+ansible-navigator doc setup
+----
+
++
+NOTE:  Remember, if you ever get stuck in *ansible-navigator*, kbd:[Esc] will always bring you to the previous screen. Pressing kbd:[Esc] when there are no more screens left will exit *ansible-navigator*.
+
+
+
+

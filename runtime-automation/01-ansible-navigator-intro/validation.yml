@@ -1,0 +1,16 @@
+---
+- name: Validation control node
+  hosts: controller
+  gather_facts: false
+  vars:
+    USER: rhel
+  tasks:
+    - name: Get stats of playbook
+      ansible.builtin.stat:
+        path: /home/{{ USER }}/ansible-files/test.yml
+      register: r_play
+
+    - name: Write fail log
+      validation_check:
+        error_msg: "The 'test.yml' playbook does not exist."
+        check: r_play.stat.exists

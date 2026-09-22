@@ -1,0 +1,19 @@
+---
+- name: Validation control node
+  hosts: controller
+  gather_facts: false
+  vars:
+    USER: rhel
+  tasks:
+    - name: Get stats of ansible-navigator.yml
+      ansible.builtin.command:
+        cmd: grep -Fxq "  editor:" /home/{{ USER }}/ansible-files/ansible-navigator.yml
+      register: r_check_file
+      check_mode: false
+      ignore_errors: true
+      changed_when: false
+
+    - name: Write fail log
+      validation_check:
+        error_msg: "The 'ansible-navigator.yml' does not have all the contents"
+        check: not r_check_file.rc

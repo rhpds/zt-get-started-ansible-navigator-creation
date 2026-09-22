@@ -1,0 +1,14 @@
+:sectnums:
+:experimental:
+= Knowledge check
+
+. In the previous challenge, you were tasked with finding the github handle of the author of the `fact_diff` module contained in the `ansible.utils` collection. What was that handle?
+
++
+[%interactive]
+* [ ] @hardcider
+* [ ] @ianaboss
+* [ ] @osisupermodel
+* [ ] @cidrblock
+
+

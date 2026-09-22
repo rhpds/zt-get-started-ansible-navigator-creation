@@ -3,4 +3,12 @@
 egress:
   - ports:
       - protocol: TCP
-        port: 443
+        port: 22    # SSH for Ansible control
+      - protocol: TCP
+        port: 80    # HTTP for package repos
+      - protocol: TCP
+        port: 443   # HTTPS for package repos and registries
+      - protocol: TCP
+        port: 8443  # code-server web interface
+      - protocol: UDP
+        port: 53    # DNS resolution

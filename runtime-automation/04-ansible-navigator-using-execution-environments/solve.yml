@@ -1,0 +1,32 @@
+---
+- name: Solve control node
+  hosts: controller
+  vars:
+    USER: rhel
+  tasks:
+    - name: Create ansible-navigator.yml
+      ansible.builtin.copy:
+        content: |
+          ---
+          ansible-navigator:
+            execution-environment:
+              container-engine: podman
+              enabled: true
+              image: quay.io/acme_corp/first_playbook_ee:latest
+              pull:
+                policy: never
+
+            logging:
+              level: debug
+
+            playbook-artifact:
+              save-as: /home/rhel/ansible-files/{playbook_name}-artifact-{time_stamp}.json
+
+            editor:
+              command: code-server {filename}
+              console: false
+
+        dest: "/home/{{ USER }}/ansible-files/ansible-navigator.yml"
+        owner: "{{ USER }}"
+        group: "{{ USER }}"
+        mode: "0644"

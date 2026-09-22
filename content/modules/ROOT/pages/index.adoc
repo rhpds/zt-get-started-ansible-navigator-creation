@@ -1,0 +1,41 @@
+= Getting Started with Ansible Navigator
+
+Welcome to the Ansible Navigator learning lab!
+
+== About This Lab
+
+This lab teaches you the fundamentals of **Ansible Navigator**, the modern Terminal User Interface (TUI) for running and developing Ansible playbooks.
+
+=== What You'll Learn
+
+* Introduction to Ansible Navigator and its features
+* Navigating the Ansible Navigator TUI interface
+* Configuring ansible-navigator for your workflow
+* Using execution environments with ansible-navigator
+* Best practices for playbook development with containers
+
+=== Prerequisites
+
+* Basic familiarity with Ansible concepts
+* Understanding of YAML syntax
+* Command-line interface experience
+
+=== Time to Complete
+
+Approximately 45 minutes to complete all modules.
+
+=== Lab Modules
+
+xref:01-ansible-navigator-intro.adoc[1. Introduce the Environment]:: Learn what ansible-navigator is and how to use basic commands to run playbooks.
+
+xref:02-ansible-navigator-explore-ui.adoc[2. Exploring the ansible-navigator Interface]:: Master the interactive TUI with keyboard navigation and subcommands.
+
+xref:03-configure-ansible-navigator.adoc[3. Configuring Common ansible-navigator Options]:: Configure ansible-navigator for your preferred workflow and editor integration.
+
+xref:04-ansible-navigator-using-execution-environments.adoc[4. Using Execution Environments]:: Understand and use container-based execution environments with ansible-navigator.
+
+xref:05-navigator-quiz.adoc[5. Knowledge Check]:: Test your understanding with a brief knowledge check quiz.
+
+== Let's Get Started
+
+Ready to begin? Start with xref:01-ansible-navigator-intro.adoc[Module 1] or navigate using the menu on the left.
