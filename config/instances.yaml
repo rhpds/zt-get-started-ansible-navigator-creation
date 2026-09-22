@@ -1,5 +1,19 @@
 ---
-containers: []
+containers:
+  - name: code-server
+    image: quay.io/openshiftlabs/code-server:latest
+    ports:
+      - name: code-server
+        containerPort: 8443
+        protocol: TCP
+    environment:
+      PASSWORD: ansible123!
+    volumeMounts:
+      - name: code-server-data
+        mountPath: /home/rhel/ansible-files
+    volumes:
+      - name: code-server-data
+        emptyDir: {}
 virtualmachines:
   - name: "host1"
     image: "rhel-9.5"
