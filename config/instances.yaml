@@ -22,9 +22,9 @@ virtualmachines:
         - chown rhel:rhel /home/rhel/ansible-files
         - curl -fsSL https://code-server.dev/install.sh | sh
         - mkdir -p /home/rhel/.config/code-server
-        - 'echo "bind-addr: 0.0.0.0:8443" > /home/rhel/.config/code-server/config.yaml'
-        - 'echo "auth: password" >> /home/rhel/.config/code-server/config.yaml'
-        - 'echo "password: ansible123!" >> /home/rhel/.config/code-server/config.yaml'
-        - 'echo "cert: false" >> /home/rhel/.config/code-server/config.yaml'
+        - echo "bind-addr:0.0.0.0:8443" > /home/rhel/.config/code-server/config.yaml
+        - echo "auth:password" >> /home/rhel/.config/code-server/config.yaml
+        - echo "password:ansible123!" >> /home/rhel/.config/code-server/config.yaml
+        - echo "cert:false" >> /home/rhel/.config/code-server/config.yaml
         - chown -R rhel:rhel /home/rhel/.config/code-server
         - systemctl enable --now code-server@rhel
