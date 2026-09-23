@@ -15,10 +15,6 @@ egress:
 
 # Ingress traffic rules
 ingress:
-  - from:
-      - podSelector:
-          matchLabels:
-            app.kubernetes.io/name: showroom
-    ports:
+  - ports:
       - protocol: TCP
-        port: 8080  # Allow showroom pod to reach VSCode on VMs
+        port: 8080  # Allow external route traffic to reach VSCode on VMs
