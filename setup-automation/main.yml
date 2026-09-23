@@ -83,6 +83,51 @@
       var: r_result
     when: r_result is defined
 
+  - name: Create ansible-files directory
+    ansible.builtin.file:
+      path: /home/rhel/ansible-files
+      state: directory
+      owner: rhel
+      group: rhel
+      mode: '0755'
+
+  - name: Download code-server install script
+    ansible.builtin.get_url:
+      url: https://code-server.dev/install.sh
+      dest: /tmp/install-code-server.sh
+      mode: '0755'
+
+  - name: Run code-server installer
+    ansible.builtin.shell: sh /tmp/install-code-server.sh
+    become: true
+
+  - name: Create code-server config directory
+    ansible.builtin.file:
+      path: /home/rhel/.config/code-server
+      state: directory
+      owner: rhel
+      group: rhel
+      mode: '0755'
+
+  - name: Create code-server config file
+    ansible.builtin.copy:
+      dest: /home/rhel/.config/code-server/config.yaml
+      owner: rhel
+      group: rhel
+      mode: '0644'
+      content: |
+        bind-addr: 0.0.0.0:8443
+        auth: password
+        password: ansible123!
+        cert: false
+
+  - name: Enable and start code-server service
+    ansible.builtin.systemd:
+      name: code-server@rhel
+      enabled: true
+      state: started
+    become: true
+
   - name: Fail if stage was failed
     ansible.builtin.fail:
       msg: "Setup failed"
