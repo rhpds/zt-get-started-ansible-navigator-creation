@@ -12,3 +12,13 @@ egress:
         port: 8443  # code-server web interface
       - protocol: UDP
         port: 53    # DNS resolution
+
+# Ingress traffic rules
+ingress:
+  - from:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/name: showroom
+    ports:
+      - protocol: TCP
+        port: 8443  # Allow showroom pod to reach code-server on VMs
