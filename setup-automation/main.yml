@@ -141,4 +141,6 @@
       msg: "Setup failed"
     when:
     - r_result is defined
+    - r_result is not skipped
+    - r_result.rc is defined
     - r_result.rc != 0
