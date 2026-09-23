@@ -91,15 +91,23 @@
       group: rhel
       mode: '0755'
 
+  - name: Check if code-server is installed
+    ansible.builtin.command: which code-server
+    register: code_server_check
+    failed_when: false
+    changed_when: false
+
   - name: Download code-server install script
     ansible.builtin.get_url:
       url: https://code-server.dev/install.sh
       dest: /tmp/install-code-server.sh
       mode: '0755'
+    when: code_server_check.rc != 0
 
   - name: Run code-server installer
     ansible.builtin.shell: sh /tmp/install-code-server.sh
     become: true
+    when: code_server_check.rc != 0
 
   - name: Create code-server config directory
     ansible.builtin.file:
