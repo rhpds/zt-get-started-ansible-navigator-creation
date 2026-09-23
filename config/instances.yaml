@@ -20,7 +20,7 @@ virtualmachines:
       runcmd:
         - mkdir -p /home/rhel/ansible-files
         - chown rhel:rhel /home/rhel/ansible-files
-        - curl -fsSL https://code-server.dev/install.sh | sh
+        - su - rhel -c 'curl -fsSL https://code-server.dev/install.sh | sh'
         - systemctl enable --now code-server@rhel
         - sed -i 's/127.0.0.1:8080/0.0.0.0:8443/g' /home/rhel/.config/code-server/config.yaml
         - "sed -i 's|password:.*|password: ansible123!|g' /home/rhel/.config/code-server/config.yaml"
