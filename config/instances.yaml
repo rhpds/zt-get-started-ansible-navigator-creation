@@ -17,14 +17,17 @@ virtualmachines:
       password: ansible123!
       chpasswd: { expire: False }
       ssh_pwauth: true
+      write_files:
+        - path: /home/rhel/.config/code-server/config.yaml
+          owner: rhel:rhel
+          permissions: '0644'
+          content: |
+            bind-addr: 0.0.0.0:8443
+            auth: password
+            password: ansible123!
+            cert: false
       runcmd:
         - mkdir -p /home/rhel/ansible-files
         - chown rhel:rhel /home/rhel/ansible-files
         - curl -fsSL https://code-server.dev/install.sh | sh
-        - mkdir -p /home/rhel/.config/code-server
-        - echo "bind-addr:0.0.0.0:8443" > /home/rhel/.config/code-server/config.yaml
-        - echo "auth:password" >> /home/rhel/.config/code-server/config.yaml
-        - echo "password:ansible123!" >> /home/rhel/.config/code-server/config.yaml
-        - echo "cert:false" >> /home/rhel/.config/code-server/config.yaml
-        - chown -R rhel:rhel /home/rhel/.config/code-server
         - systemctl enable --now code-server@rhel
