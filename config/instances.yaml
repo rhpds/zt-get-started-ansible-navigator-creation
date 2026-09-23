@@ -1,6 +1,7 @@
 ---
 containers: []
-- name: vscode
+virtualmachines:
+  - name: vscode
     image: devtools-ansible
     memory: 8G
     cores: 2

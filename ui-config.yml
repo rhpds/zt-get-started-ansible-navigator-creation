@@ -22,6 +22,6 @@ antora:
 
 tabs:
   - name: "VSCode Editor"
-    url: http://host1-code-server:8443/?folder=/home/rhel/ansible-files/
+    url: http://vscode-vscode-8080:8080/?folder=/home/rhel/ansible-files/
   - name: ">_ terminal"
     url: /wetty

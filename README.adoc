@@ -82,7 +82,7 @@ The `setup-automation/` directory handles initial provisioning when the lab is d
 ----
 setup-automation/
 ├── main.yml                            # Orchestration for initial setup
-└── setup-host1.sh                      # Host-specific setup script
+└── setup-vscode.sh                     # Host-specific setup script
 ----
 
 This runs once when the lab environment is created to prepare the control node.

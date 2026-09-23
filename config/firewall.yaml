@@ -9,7 +9,7 @@ egress:
       - protocol: TCP
         port: 443   # HTTPS for package repos and registries
       - protocol: TCP
-        port: 8443  # code-server web interface
+        port: 8080  # VSCode web interface
       - protocol: UDP
         port: 53    # DNS resolution
 
@@ -21,4 +21,4 @@ ingress:
             app.kubernetes.io/name: showroom
     ports:
       - protocol: TCP
-        port: 8443  # Allow showroom pod to reach code-server on VMs
+        port: 8080  # Allow showroom pod to reach VSCode on VMs
