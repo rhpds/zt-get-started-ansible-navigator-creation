@@ -11,6 +11,10 @@ virtualmachines:
         value: "isolated"
     networks:
       - default
+    services:
+      - name: code-server
+        port: 8443
+        targetPort: 8443
     userdata: |-
       #cloud-config
       user: rhel
