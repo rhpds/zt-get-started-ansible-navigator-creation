@@ -117,6 +117,20 @@
       group: rhel
       mode: '0755'
 
+  - name: Check if code-server service is running
+    ansible.builtin.systemd:
+      name: code-server@rhel
+    register: code_server_service
+    become: true
+    failed_when: false
+
+  - name: Stop code-server service if running
+    ansible.builtin.systemd:
+      name: code-server@rhel
+      state: stopped
+    become: true
+    when: code_server_service.status.ActiveState is defined
+
   - name: Create code-server config file
     ansible.builtin.copy:
       dest: /home/rhel/.config/code-server/config.yaml
@@ -129,12 +143,32 @@
         password: ansible123!
         cert: false
 
-  - name: Enable and start code-server service
+  - name: Enable and restart code-server service
     ansible.builtin.systemd:
       name: code-server@rhel
       enabled: true
-      state: started
+      state: restarted
+      daemon_reload: true
     become: true
+
+  - name: Wait for code-server to be ready
+    ansible.builtin.wait_for:
+      port: 8080
+      host: 0.0.0.0
+      timeout: 30
+      delay: 2
+    ignore_errors: true
+
+  - name: Check code-server service status
+    ansible.builtin.systemd:
+      name: code-server@rhel
+    register: final_service_status
+    become: true
+    failed_when: false
+
+  - name: Display code-server service status
+    ansible.builtin.debug:
+      var: final_service_status.status.ActiveState
 
   - name: Fail if stage was failed
     ansible.builtin.fail:
