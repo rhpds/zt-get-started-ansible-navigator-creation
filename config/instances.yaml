@@ -13,8 +13,10 @@ virtualmachines:
       - default
     services:
       - name: code-server
-        port: 8443
-        targetPort: 8443
+        ports:
+          - port: 8443
+            targetPort: 8443
+            protocol: TCP
     userdata: |-
       #cloud-config
       user: rhel
