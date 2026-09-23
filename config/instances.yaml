@@ -17,9 +17,6 @@ virtualmachines:
       password: ansible123!
       chpasswd: { expire: False }
       ssh_pwauth: true
-      packages:
-        - git
-        - curl
       runcmd:
         - mkdir -p /home/rhel/ansible-files
         - chown rhel:rhel /home/rhel/ansible-files
