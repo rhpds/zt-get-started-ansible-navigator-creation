@@ -55,20 +55,9 @@
       dest: "/tmp/runtime-scripts/{{ module_dir }}/{{ module_stage }}-{{ ansible_host }}.sh"
     register: r_result
 
-  - name: Copy runtime helper
-    when: r_script_test.stat.exists
-    ansible.builtin.copy:
-      src: ./runtime-helper.sh
-      dest: /tmp/runtime-scripts/runtime-helper.sh
-      mode: '0644'
-
   - name: Execute module_stage-host.sh if it exists
     when: r_script_test.stat.exists
-    shell: |
-      bash -x /tmp/runtime-scripts/{{ module_dir }}/{{ module_stage }}-{{ ansible_host }}.sh > /tmp/runtime-scripts/{{ module_dir }}/{{ module_stage }}-{{ ansible_host }}.log 2>&1
-      r_script_rc=$?
-      cat /tmp/runtime-scripts/{{ module_dir }}/{{ module_stage }}-{{ ansible_host }}.log
-      exit "$r_script_rc"
+    shell: "sh -x /tmp/runtime-scripts/{{ module_dir }}/{{ module_stage }}-{{ ansible_host }}.sh > /tmp/runtime-scripts/{{ module_dir }}/{{ module_stage }}-{{ ansible_host }}.log 2>&1"
     become: true
     register: r_result
 
@@ -88,6 +77,11 @@
     ansible.builtin.debug:
       var: r_result
     when: r_script_test.stat.exists and job_info_dir is defined
+
+  - name: Fail if stage was failed
+    ansible.builtin.fail:
+      msg: "Stage failed"
+    when: r_script_test.stat.exists and r_result.rc != 0
 
   - name: Fail if stage was failed
     ansible.builtin.fail:
