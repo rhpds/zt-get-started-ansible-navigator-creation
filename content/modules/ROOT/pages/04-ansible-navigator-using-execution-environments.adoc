@@ -17,7 +17,7 @@ ansible-navigator:
     enabled: true
     image: quay.io/acme_corp/first_playbook_ee:latest
     pull:
-      policy: never
+      policy: missing
 
   logging:
     level: debug
