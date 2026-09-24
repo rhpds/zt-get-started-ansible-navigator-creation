@@ -35,7 +35,7 @@ systemctl --no-pager --full status code-server
 echo "code-server is listening on vscode TCP/8080 with ${WORKSPACE} ready to open."
 echo "A CNV route is required before the Showroom browser tab can reach it."
 
-tee /home/rhel/ansible-files/ansible-navigator.yaml << EOF
+tee /home/rhel/ansible-files/ansible-navigator.yml << EOF
 ---
 ansible-navigator:
   execution-environment:

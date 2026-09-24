@@ -1,8 +1,6 @@
 #!/bin/sh
 
-set -eu
-
-tee /home/rhel/ansible-files/test.yaml  << EOF
+tee /home/rhel/ansible-files/test.yml  << EOF
 ---
 - name: this is just a test
   hosts: localhost

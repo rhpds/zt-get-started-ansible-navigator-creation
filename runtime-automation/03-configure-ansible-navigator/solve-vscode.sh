@@ -1,8 +1,6 @@
 #!/bin/sh
 
-set -eu
-
-tee /home/rhel/ansible-files/ansible-navigator.yaml << EOF
+tee /home/rhel/ansible-files/ansible-navigator.yml << EOF
 ---
 ansible-navigator:
   execution-environment:
