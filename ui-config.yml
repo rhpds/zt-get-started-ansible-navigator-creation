@@ -6,19 +6,14 @@ antora:
   modules:
     - name: 01-ansible-navigator-intro
       label: "Introduce the Environment"
-      solveButton: true
     - name: 02-ansible-navigator-explore-ui
       label: "Exploring the Interface"
-      solveButton: true
     - name: 03-configure-ansible-navigator
       label: "Configuring Options"
-      solveButton: true
     - name: 04-ansible-navigator-using-execution-environments
       label: "Using Execution Environments"
-      solveButton: true
     - name: 05-navigator-quiz
       label: "Knowledge Check"
-      solveButton: true
 
 tabs:
   - name: "VSCode Editor"

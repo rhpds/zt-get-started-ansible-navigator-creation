@@ -1,5 +1,3 @@
-[controller]
-vscode
 
 [all:vars]
 ansible_user = rhel
