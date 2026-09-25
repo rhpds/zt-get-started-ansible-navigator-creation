@@ -10,7 +10,12 @@ NOTE: *code-server* is not packaged with Ansible Automation Platform and is not 
 +
 * Open the integrated terminal *Terminal > New Terminal*
 +
-NOTE: This terminal defaults to **/home/rhel/ansible-files/** you should not need to change directories unless instructed to do so.
+* Change to the ansible-files directory:
++
+[source,shell]
+----
+cd ansible-files
+----
 
 * Quickly test that navigator has been installed, run:
 +
