@@ -17,18 +17,15 @@ fi
 
 echo "Configuring code-server for ${LAB_USER}"
 install -d -o "${LAB_USER}" -g "${LAB_USER}" -m 0700 "${LAB_HOME}/.config/code-server"
-# config.yaml is the code-server process config. Editor settings do not belong here.
-# file-watcher-polling is a VS Code server flag (milliseconds). 500 is the poll
-# interval; code-server forwards it only when --vscode-option exists (>= 4.134.0).
-# default-folder opens the lab directory when the browser URL does not name one.
+# This image's code-server rejects --vscode-option (added in 4.134.0). Keep
+# config.yaml to keys it already accepts. The lab directory is passed as the
+# ExecStart argument, which older code-server uses when no folder is in the URL.
 printf '%s\n' \
   'bind-addr: 0.0.0.0:8080' \
   'auth: password' \
   "password: ${CODE_SERVER_PASSWORD}" \
   'cert: false' \
-  'vscode-option:' \
-  '  - file-watcher-polling=500' \
-  "  - default-folder=${WORKSPACE}" \
+  'ignore-last-opened: true' \
   > "${LAB_HOME}/.config/code-server/config.yaml"
 chown "${LAB_USER}:${LAB_USER}" "${LAB_HOME}/.config/code-server/config.yaml"
 chmod 0600 "${LAB_HOME}/.config/code-server/config.yaml"
@@ -44,8 +41,17 @@ printf '%s\n' \
 chown "${LAB_USER}:${LAB_USER}" "${LAB_HOME}/.local/share/code-server/User/settings.json"
 chmod 0644 "${LAB_HOME}/.local/share/code-server/User/settings.json"
 
+install -d /etc/systemd/system/code-server.service.d
+CODE_SERVER_BIN=$(command -v code-server)
+cat > /etc/systemd/system/code-server.service.d/workspace.conf << EOF
+[Service]
+ExecStart=
+ExecStart=${CODE_SERVER_BIN} ${WORKSPACE}
+EOF
+
 # Keep the user service alive after the provisioning connection closes.
 loginctl enable-linger
+systemctl daemon-reload
 systemctl enable --now code-server
 systemctl restart code-server
 systemctl --no-pager --full status code-server

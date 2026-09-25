@@ -142,9 +142,22 @@
         auth: password
         password: ansible123!
         cert: false
-        vscode-option:
-          - file-watcher-polling=500
-          - default-folder=/home/rhel/ansible-files
+        ignore-last-opened: true
+
+  - name: Create code-server service drop-in directory
+    ansible.builtin.file:
+      path: /etc/systemd/system/code-server.service.d
+      state: directory
+      mode: '0755'
+
+  - name: Open the lab directory from code-server.service
+    ansible.builtin.copy:
+      dest: /etc/systemd/system/code-server.service.d/workspace.conf
+      mode: '0644'
+      content: |
+        [Service]
+        ExecStart=
+        ExecStart=/usr/bin/code-server /home/rhel/ansible-files
 
   - name: Create code-server user settings directory
     ansible.builtin.file:
