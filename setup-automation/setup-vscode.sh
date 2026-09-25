@@ -26,37 +26,6 @@ printf '%s\n' \
 chown "${LAB_USER}:${LAB_USER}" "${LAB_HOME}/.config/code-server/config.yaml"
 chmod 0600 "${LAB_HOME}/.config/code-server/config.yaml"
 
-# Configure VSCode User settings
-echo "Configuring VSCode User settings"
-VSCODE_USER_DIR="${LAB_HOME}/.local/share/code-server/User"
-install -d -o "${LAB_USER}" -g "${LAB_USER}" -m 0755 "${VSCODE_USER_DIR}"
-
-cat > "${VSCODE_USER_DIR}/settings.json" <<'EOF'
-{
-  "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/node_modules/*/**": true
-  },
-  "files.useExperimentalFileWatcher": true,
-  "files.watcherInclude": [
-    "**/*.yml",
-    "**/*.yaml",
-    "**/*.py",
-    "**/*.sh",
-    "**/*.txt",
-    "**/*.conf",
-    "**/*.cfg"
-  ],
-  "terminal.integrated.cwd": "/home/rhel/ansible-files",
-  "terminal.integrated.defaultProfile.linux": "bash",
-  "workbench.startupEditor": "none"
-}
-EOF
-
-chown "${LAB_USER}:${LAB_USER}" "${VSCODE_USER_DIR}/settings.json"
-chmod 0644 "${VSCODE_USER_DIR}/settings.json"
-
 # Keep the user service alive after the provisioning connection closes.
 loginctl enable-linger
 systemctl enable --now code-server
