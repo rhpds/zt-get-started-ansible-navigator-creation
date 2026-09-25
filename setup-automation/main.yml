@@ -136,12 +136,34 @@
       dest: /home/rhel/.config/code-server/config.yaml
       owner: rhel
       group: rhel
-      mode: '0644'
+      mode: '0600'
       content: |
         bind-addr: 0.0.0.0:8080
         auth: password
         password: ansible123!
         cert: false
+        vscode-option:
+          - file-watcher-polling=500
+          - default-folder=/home/rhel/ansible-files
+
+  - name: Create code-server user settings directory
+    ansible.builtin.file:
+      path: /home/rhel/.local/share/code-server/User
+      state: directory
+      owner: rhel
+      group: rhel
+      mode: '0700'
+
+  - name: Create code-server user settings
+    ansible.builtin.copy:
+      dest: /home/rhel/.local/share/code-server/User/settings.json
+      owner: rhel
+      group: rhel
+      mode: '0644'
+      content: |
+        {
+          "terminal.integrated.cwd": "/home/rhel/ansible-files"
+        }
 
   - name: Enable and restart code-server service
     ansible.builtin.systemd:
